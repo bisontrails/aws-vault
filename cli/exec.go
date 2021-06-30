@@ -350,5 +350,8 @@ func execSyscall(command string, args []string, env []string) error {
 	argv = append(argv, command)
 	argv = append(argv, args...)
 
+	/* #nosec G204 */
+	// It is the users explicit intention to execute the command by passing it into `aws-vault exec`
+	// pulled from the aws/config file
 	return syscall.Exec(argv0, argv, env)
 }

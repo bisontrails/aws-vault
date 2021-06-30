@@ -11,6 +11,8 @@ func OSAScriptMfaPrompt(mfaSerial string) (string, error) {
 	if !validateMfaName(mfaSerial) {
 		return "", errors.New(fmt.Sprintf("Invalid Mfa serial name %s.", mfaSerial))
 	}
+	/* #nosec G204 */
+	// user input is restricted to alpha-numeric+=/:,.+
 	cmd := exec.Command("osascript", "-e", fmt.Sprintf(`
 		display dialog "%s" default answer "" buttons {"OK", "Cancel"} default button 1
         text returned of the result
