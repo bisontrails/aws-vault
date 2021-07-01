@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"strings"
+
+	exec "golang.org/x/sys/execabs"
 )
 
 // YkmanProvider runs ykman to generate a OATH-TOTP token from the Yubikey device
@@ -35,6 +36,9 @@ func YkmanMfaProvider(mfaSerial string) (string, error) {
 	}
 
 	log.Printf("Fetching MFA code using `ykman %s`", strings.Join(args, " "))
+	/* #nosec G204 */
+	// command name is hardcoded
+	// no shell expansion occurs
 	cmd := exec.Command("ykman", args...)
 	cmd.Stderr = os.Stderr
 

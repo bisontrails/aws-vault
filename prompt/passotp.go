@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"strings"
+
+	exec "golang.org/x/sys/execabs"
 )
 
 // PassOTPProvider uses the pass otp extension to generate a OATH-TOTP token
@@ -18,6 +19,7 @@ func PassMfaProvider(mfaSerial string) (string, error) {
 	}
 
 	log.Printf("Fetching MFA code using `pass otp %s`", passOathCredName)
+	/* #nosec G204 */
 	cmd := exec.Command("pass", "otp", passOathCredName)
 	cmd.Stderr = os.Stderr
 

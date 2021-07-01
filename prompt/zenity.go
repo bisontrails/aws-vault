@@ -1,11 +1,13 @@
 package prompt
 
 import (
-	"os/exec"
 	"strings"
+
+	exec "golang.org/x/sys/execabs"
 )
 
 func ZenityMfaPrompt(mfaSerial string) (string, error) {
+	/* #nosec G204 */
 	cmd := exec.Command("zenity", "--entry", "--title", "aws-vault", "--text", mfaPromptMessage(mfaSerial))
 
 	out, err := cmd.Output()

@@ -11,6 +11,8 @@ import (
 // StartEc2EndpointProxyServerProcess starts a `aws-vault proxy` process
 func StartEc2EndpointProxyServerProcess() error {
 	log.Println("Starting `aws-vault proxy` as root in the background")
+	/* #nosec G204 */
+	// Always resolves to aws-vault executable
 	cmd := exec.Command("sudo", "-b", awsVaultExecutable(), "proxy")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

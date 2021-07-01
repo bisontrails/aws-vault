@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"log"
 	"os"
-	osexec "os/exec"
 	"os/signal"
 	"runtime"
 	"strings"
 	"syscall"
 	"time"
+
+	osexec "golang.org/x/sys/execabs"
 
 	"github.com/99designs/aws-vault/v6/iso8601"
 	"github.com/99designs/aws-vault/v6/server"
@@ -301,6 +302,8 @@ func (e *environ) Set(key, val string) {
 func execCmd(command string, args []string, env []string) error {
 	log.Printf("Starting child process: %s %s", command, strings.Join(args, " "))
 
+	/* #nosec G204 */
+	// It is the users explicit intention to execute the command by passing it into `aws-vault exec`
 	cmd := osexec.Command(command, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -349,5 +352,7 @@ func execSyscall(command string, args []string, env []string) error {
 	argv = append(argv, command)
 	argv = append(argv, args...)
 
+	/* #nosec G204 */
+	// It is the users explicit intention to execute the command by passing it into `aws-vault exec`
 	return syscall.Exec(argv0, argv, env)
 }

@@ -1,11 +1,13 @@
 package prompt
 
 import (
-	"os/exec"
 	"strings"
+
+	exec "golang.org/x/sys/execabs"
 )
 
 func KDialogMfaPrompt(mfaSerial string) (string, error) {
+	/* #nosec G204 */
 	cmd := exec.Command("kdialog", "--inputbox", mfaPromptMessage(mfaSerial), "--title", "aws-vault")
 
 	out, err := cmd.Output()

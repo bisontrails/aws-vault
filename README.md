@@ -133,6 +133,11 @@ Here's what you can expect from aws-vault
 | `aws-vault exec bar-role2`               | session-token + role + role | session-token | Yes |
 | `aws-vault exec bar-role2 --no-session`  | role + role                 | role          | Yes |
 
+## Security
+It is a good practice to write protect your ~/.aws/config and ~/aws/credentials file as they can include commands that are executed when logging in with the aws cli or aws-vault.
+```bash
+chmod go-w ~/.aws/config ~/.aws/credentials
+```
 ## Development
 
 The [macOS release builds](https://github.com/99designs/aws-vault/releases) are code-signed to avoid extra prompts in Keychain. You can verify this with:
