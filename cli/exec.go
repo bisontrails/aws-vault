@@ -302,6 +302,8 @@ func (e *environ) Set(key, val string) {
 func execCmd(command string, args []string, env []string) error {
 	log.Printf("Starting child process: %s %s", command, strings.Join(args, " "))
 
+	/* #nosec G204 */
+	// It is the users explicit intention to execute the command by passing it into `aws-vault exec`
 	cmd := osexec.Command(command, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -352,6 +354,5 @@ func execSyscall(command string, args []string, env []string) error {
 
 	/* #nosec G204 */
 	// It is the users explicit intention to execute the command by passing it into `aws-vault exec`
-	// pulled from the aws/config file
 	return syscall.Exec(argv0, argv, env)
 }

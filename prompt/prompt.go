@@ -2,7 +2,6 @@ package prompt
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 )
 
@@ -25,15 +24,6 @@ func Method(s string) PromptFunc {
 		panic(fmt.Sprintf("Prompt method %q doesn't exist", s))
 	}
 	return m
-}
-
-// names supported AWS MFA serial names
-// see https://docs.aws.amazon.com/cli/latest/reference/iam/create-virtual-mfa-device.html#options
-// --virtual-mfa-device-name for restrictions
-var isValidMfaSerial = regexp.MustCompile(`^[a-zA-Z0-9+=/:,.+]+$`).MatchString
-
-func validateMfaName(mfaSerial string) bool {
-	return isValidMfaSerial(mfaSerial)
 }
 
 func mfaPromptMessage(mfaSerial string) string {

@@ -19,6 +19,7 @@ func PassMfaProvider(mfaSerial string) (string, error) {
 	}
 
 	log.Printf("Fetching MFA code using `pass otp %s`", passOathCredName)
+	/* #nosec G204 */
 	cmd := exec.Command("pass", "otp", passOathCredName)
 	cmd.Stderr = os.Stderr
 

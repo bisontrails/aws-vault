@@ -7,6 +7,7 @@ import (
 )
 
 func ZenityMfaPrompt(mfaSerial string) (string, error) {
+	/* #nosec G204 */
 	cmd := exec.Command("zenity", "--entry", "--title", "aws-vault", "--text", mfaPromptMessage(mfaSerial))
 
 	out, err := cmd.Output()
